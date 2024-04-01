@@ -3,19 +3,23 @@ package com.techgear;
 import java.lang.String;
 
 public class ProdutoVirtual extends Produto {
-  private int tamanho;
-  private String formatoArquivo;
+  private int tamanhoArquivo;
+  private String formato;
 
   public ProdutoVirtual() {
     super();
   }
 
-  public ProdutoVirtual(String nome, double preco, String descricao, String marca, int tamanho, String formatoArquivo) {  
+  public ProdutoVirtual(String nome, double preco, String descricao, String marca, int tamanhoArquivo, String formato) {  
   super(nome, preco, descricao, marca);
-    this.tamanho = tamanho;
-    this.formatoArquivo = formatoArquivo;
+    this.tamanhoArquivo = tamanhoArquivo;
+    this.formato = formato;
   }
   
+  public void realizarDownload() {
+    //implement this
+
+  }
 
   public void atualizarEstoque(Produto produto, int estoque) {
     ProdutoVirtual produtoVirtual = (ProdutoVirtual) produto;
@@ -29,16 +33,16 @@ public class ProdutoVirtual extends Produto {
     produtoVirtual.setPreco(preco);
   }
 
-  public void setTamanho(int tamanho) {
-    this.tamanho = tamanho;
+  public void setTamanhoArquivo(int tamanhoArquivo) {
+    this.tamanhoArquivo = tamanhoArquivo;
   }
-  public void setFormato(String formatoArquivo) {
-    this.formatoArquivo= formatoArquivo;
+  public void setFormato(String formato) {
+    this.formato = formato;
   }
-  public int getTamanho() {
-    return tamanho;
+  public int getTamanhoArquivo() {
+    return tamanhoArquivo;
   }
-  public String getFormatoArquivo() {
-    return formatoArquivo;
+  public String getFormato() {
+    return formato;
   }
 }

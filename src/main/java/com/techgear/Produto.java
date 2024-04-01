@@ -52,6 +52,9 @@ abstract class Produto {
   public void setEstoque(int estoque) {
     this.estoque = estoque;
   }
+  public void setCategoria(Categoria categoria) {
+    this.categoria = categoria;
+  }
 
   public int getId() {
     return id;
@@ -70,5 +73,8 @@ abstract class Produto {
   }
   public int getEstoque() {
     return estoque;
+  }
+  public Categoria getCategoria() {
+    return categoria;
   }
 }

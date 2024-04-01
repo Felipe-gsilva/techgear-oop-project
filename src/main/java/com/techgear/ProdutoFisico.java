@@ -18,16 +18,16 @@ public class ProdutoFisico extends Produto {
   public void atualizarEstoque(Produto produto, int estoque) {
     ProdutoFisico produtoFisico = (ProdutoFisico) produto;
     /* set this method later*/
-    produto.setEstoque(estoque);
+    produtoFisico.setEstoque(estoque);
   }
 
   public void atualizarPreco(Produto produto, double preco) {
     ProdutoFisico produtoFisico = (ProdutoFisico) produto;
     /* set this method later*/
-    produto.setPreco(preco);
+    produtoFisico.setPreco(preco);
   }
   
-  public void calcularFrete(Produto produto) {   
+  public double calcularFrete(Produto produto) {   
     ProdutoFisico produtoFisico = (ProdutoFisico) produto;
     double peso = produtoFisico.getPeso();
     double[] dimensoes = produtoFisico.getDimensoes();
@@ -57,7 +57,7 @@ public class ProdutoFisico extends Produto {
       multiplicador += score;
     }
 
-    produtoFisico.setFrete(multiplicador * baseFrete);
+    return multiplicador * baseFrete; 
   }
 
   // getters e setters
