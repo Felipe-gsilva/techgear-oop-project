@@ -1,45 +1,32 @@
 package com.techgear;
 
-import java.lang.String;
-
 public class ProdutoVirtual extends Produto {
-  private int tamanhoArquivo;
+  private double tamanhoArquivo;
   private String formato;
 
   public ProdutoVirtual() {
     super();
   }
 
-  public ProdutoVirtual(String nome, double preco, String descricao, String marca, int tamanhoArquivo, String formato) {  
-  super(nome, preco, descricao, marca);
+  public ProdutoVirtual(int id, String nome, double preco, String descricao, String marca, Categoria categoria, double tamanhoArquivo, String formato) {  
+    super(id, nome, preco, descricao, marca, categoria);
     this.tamanhoArquivo = tamanhoArquivo;
     this.formato = formato;
   }
   
-  public void realizarDownload() {
+  public void realizarDownload(ProdutoVirtual produtoVirtual) {
+    System.out.println("Realizando download do arquivo " + produtoVirtual.getNome() + "...");
     //implement this
-
   }
 
-  public void atualizarEstoque(Produto produto, int estoque) {
-    ProdutoVirtual produtoVirtual = (ProdutoVirtual) produto;
-    /* set this method later*/
-    produtoVirtual.setEstoque(estoque);
-  }
 
-  public void atualizarPreco(Produto produto, double preco) {
-    ProdutoVirtual produtoVirtual = (ProdutoVirtual) produto;
-    /* set this method later*/
-    produtoVirtual.setPreco(preco);
-  }
-
-  public void setTamanhoArquivo(int tamanhoArquivo) {
+  public void setTamanhoArquivo(double tamanhoArquivo) {
     this.tamanhoArquivo = tamanhoArquivo;
   }
   public void setFormato(String formato) {
     this.formato = formato;
   }
-  public int getTamanhoArquivo() {
+  public double getTamanhoArquivo() {
     return tamanhoArquivo;
   }
   public String getFormato() {

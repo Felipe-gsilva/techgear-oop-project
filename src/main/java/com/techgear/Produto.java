@@ -1,7 +1,5 @@
 package com.techgear;
 
-import java.lang.String;
-
 abstract class Produto {
   private int id;
   private String nome;
@@ -13,26 +11,27 @@ abstract class Produto {
   private Categoria categoria; 
 
   public Produto() {
-    
+    contadorId++; 
   }
 
-  public Produto(String nome, double preco, String descricao, String marca) {
+  public Produto(int id, String nome, double preco, String descricao, String marca, Categoria categoria) {
     this.nome = nome;
     this.preco = preco;
     this.descricao = descricao;
     this.marca = marca;
-    this.id = gerarId();
+    this.id = id;
+    this.categoria = categoria;
+    contadorId++;
+    this.estoque = 0;
   }
 
-  private int gerarId() {
-    int novoId = ++Produto.contadorId;
-    System.out.println("Id gerado: "+novoId);
-    // criar um método para ids aleatórios
-    return novoId;
+  public void atualizarEstoque(int estoque) {
+    this.setEstoque(estoque);
   }
 
-  abstract public void atualizarEstoque(Produto produto, int estoque);
-  abstract public void atualizarPreco(Produto produto, double preco);
+  public void atualizarPreco(double preco) {
+    this.setPreco(preco);
+  }
 
   public void setId(int id) {
     this.id = id;

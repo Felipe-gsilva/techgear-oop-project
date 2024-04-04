@@ -7,14 +7,16 @@ public class Categoria {
   private int codigo;
   private String nome;
   private String descricao;
-  private ArrayList<Produto> listaProdutos;  
+  private ArrayList<Produto> listaProdutos = new ArrayList<Produto>();  
   
   public Categoria() {
 
   }
 
   public Categoria(int codigo, String nome, String descricao) {
-
+    this.codigo = codigo;
+    this.nome = nome;
+    this.descricao = descricao;
   }
 
   public void adicionarProduto(Produto produto) {
@@ -30,7 +32,6 @@ public class Categoria {
   }
 
   public Produto buscarProduto(int id) {
-    // não sei se funciona
     for(Produto produto : listaProdutos) {
       if(produto.getId() == id)
         return produto;
@@ -38,10 +39,14 @@ public class Categoria {
     return null;
   }
   
+  public Produto buscarProduto(String nome) {
+    for(Produto produto : listaProdutos) {
+      if(produto.getNome().equals(nome))
+        return produto;
+    }
+    return null;
+  }
   public ArrayList<Produto> listarProdutos() {
-    //
-    // listar ai
-    //
     return listaProdutos;  
   }
 
