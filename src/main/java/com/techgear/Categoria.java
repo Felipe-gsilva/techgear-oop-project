@@ -46,8 +46,11 @@ public class Categoria {
     }
     return null;
   }
-  public ArrayList<Produto> listarProdutos() {
-    return listaProdutos;  
+
+  public void listarProdutos() {
+    for(Produto produto : listaProdutos) {
+        System.out.println(">"+produto.getId()+" - "+produto.getNome());
+    }
   }
 
   public void setCodigo(int codigo) {

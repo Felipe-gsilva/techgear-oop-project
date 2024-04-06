@@ -3,10 +3,7 @@ package com.techgear.util;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.File;
-import com.techgear.Categoria;
-import com.techgear.ProdutoFisico;
-import com.techgear.ProdutoVirtual;
-import com.techgear.Loja;
+import com.techgear.*;
 
 public class FileHandler {
   private File categorias = new File("/home/felipe-gsilva/.dev/oop-project/bd/categorias.txt");
@@ -15,11 +12,11 @@ public class FileHandler {
 
   public FileHandler() {
   }
-  
-  public static void loadFiles(Loja loja) throws FileNotFoundException {
-      loadCategorias(getCategorias(), loja);
-      loadProdutosFisicos(getProdutosFisicos(), loja);
-      loadProdutosVirtuais(getProdutosVirtuais(), loja);
+
+  public void loadFiles(Loja loja) throws FileNotFoundException {
+    loadCategorias(getCategorias(), loja);
+    loadProdutosFisicos(getProdutosFisicos(), loja);
+    loadProdutosVirtuais(getProdutosVirtuais(), loja);
   }
   public void loadCategorias(File categorias, Loja loja) {
     try {
@@ -49,6 +46,7 @@ public class FileHandler {
         Categoria categoria = loja.buscarCategoria(Integer.valueOf(dados[5]));
         ProdutoFisico produtoFisico = new ProdutoFisico(Integer.valueOf(dados[0]), dados[1], Double.valueOf(dados[2]), dados[3], dados[4], categoria, Double.valueOf(dados[6]), dados[7]);
         loja.adicionarProduto(categoria, produtoFisico);
+
       }
     } catch (FileNotFoundException e) {
       System.out.println("Arquivo não encontrado." + e.getMessage());
@@ -65,11 +63,11 @@ public class FileHandler {
         dados = linha.split("#");
         Categoria categoria = loja.buscarCategoria(Integer.valueOf(dados[5]));
         dados[6] = dados[6].substring(0, dados[6].length() - 2);
-
         ProdutoVirtual produtoVirtual = new ProdutoVirtual(Integer.valueOf(dados[0]), dados[1], Double.valueOf(dados[2]), dados[3], dados[4], categoria, Double.valueOf(dados[6]), dados[7]);
         loja.adicionarProduto(categoria, produtoVirtual);
-      }
-    } catch (FileNotFoundException e) {
+      
+    }
+  } catch (FileNotFoundException e) {
       System.out.println("Arquivo não encontrado." + e.getMessage());
       e.printStackTrace();
     }
