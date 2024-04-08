@@ -2,6 +2,7 @@ package com.techgear;
 
 import java.util.ArrayList;
 import java.lang.String;
+import com.techgear.util.Logger;
 
 public class Categoria {
   private int codigo;
@@ -20,43 +21,61 @@ public class Categoria {
 
   public void adicionarProduto(Produto produto) {
     Categoria categoria = produto.getCategoria();
-    ArrayList<Produto> lista = categoria.getListaProdutos();
-    lista.add(produto);
+    if(categoria == null) {
+      produto.setCategoria(this);
+    }
+    if(!listaProdutos.contains(produto)) {
+      listaProdutos.add(produto);
+    }
+    else {
+      Logger.log(produto.getNome(), 4);
+    }
   }
 
   public void removerProduto(Produto produto) {
     Categoria categoria = produto.getCategoria();
-    ArrayList<Produto> lista = categoria.getListaProdutos();
-    lista.remove(produto);
+    if(categoria != null) {
+      produto.setCategoria(null);
+    }
+    if(listaProdutos.contains(produto)) {
+      listaProdutos.remove(produto);
+    }
+    else {
+      Logger.log(produto.getNome(), 1);
+    }
   }
 
   public Produto buscarProduto(int id) {
     for(Produto produto : listaProdutos) {
       if(produto.getId() == id)
-        return produto;
+      return produto;
     }
     return null;
   }
-  
+
   public Produto buscarProduto(String nome) {
     for(Produto produto : listaProdutos) {
       if(produto.getNome().equals(nome))
-        return produto;
+      return produto;
     }
     return null;
   }
 
   public void listarProdutos() {
     System.out.println("------->Produtos da categoria "+nome+":");
+    if(listaProdutos.isEmpty()) {
+      System.out.println("Nenhum produto cadastrado.");
+      return;
+    }
     for(Produto produto : listaProdutos) {
-        System.out.println(">"+produto.getId()+" - "+produto.getNome()+" - "+produto.getPreco());
+      System.out.println(">"+produto.getId()+" - "+produto.getNome()+" - "+produto.getPreco());
     }
   }
 
   public void setCodigo(int codigo) {
     this.codigo = codigo;
   }
-  
+
   public void setNome(String nome) {
     this.nome = nome;
   }
@@ -79,5 +98,5 @@ public class Categoria {
   public ArrayList<Produto> getListaProdutos() {
     return listaProdutos;
   }
-  
+
 }

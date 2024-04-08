@@ -153,6 +153,8 @@ public class DisplayLoja {
       System.out.println("3 - Remover produto");
       System.out.println("4 - Listar produtos");
       System.out.println("5 - Buscar produto");
+      System.out.println("6 - Atualizar estoque");
+      system.out.println("7 - Atualizar preço");
       System.out.println("0 - Voltar");
       opProduto = sc.nextInt();
       sc.nextLine();
@@ -228,6 +230,25 @@ public class DisplayLoja {
         break;
         case 5:
         buscarProduto();
+        break;
+        case 6:
+        System.out.println("Digite o id do produto que deseja atualizar o estoque: ");
+        idProduto = sc.nextInt();
+        sc.nextLine();
+        System.out.println("Digite a quantidade que deseja adicionar: ");
+        int quantidade = sc.nextInt();
+        sc.nextLine();
+        loja.atualizarEstoque(idProduto, quantidade);
+        break;
+        case 7:
+        System.out.println("Digite o id do produto que deseja atualizar o preço: ");
+        idProduto = sc.nextInt();
+        sc.nextLine();
+        System.out.println("Digite o novo preço: ");
+        precoProduto = sc.nextDouble();
+        sc.nextLine();
+        loja.atualizarPreco(idProduto, precoProduto);
+        break;
         default:
         System.out.println("Opção inválida.");
         break;

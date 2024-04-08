@@ -23,6 +23,9 @@ public class Logger {
       case 6:
         System.out.println("Erro ao buscar");
         break;
+      case 7:
+        System.out.println("Erro ao escrever no arquivo");
+        break;
     }
   }
 }
