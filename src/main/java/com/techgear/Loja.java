@@ -13,12 +13,13 @@ public class Loja {
   private String nome;
   private String cnpj;
   private String endereco;
-  private ArrayList<Categoria> listaCategorias = new ArrayList<>(); 
+  private ArrayList<Categoria> listaCategorias;
 
   public Loja(String nome, String cnpj, String endereco) {
     this.nome = nome;
     this.cnpj = cnpj;
     this.endereco = endereco;
+    this.listaCategorias = new ArrayList<Categoria>();
   }
 
   /**

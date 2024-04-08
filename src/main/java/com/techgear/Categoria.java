@@ -13,12 +13,13 @@ public class Categoria {
   private int codigo;
   private String nome;
   private String descricao;
-  private ArrayList<Produto> listaProdutos = new ArrayList<>();  
+  private ArrayList<Produto> listaProdutos;
   
   public Categoria(int codigo, String nome, String descricao) {
     this.codigo = codigo;
     this.nome = nome;
     this.descricao = descricao;
+    this.listaProdutos = new ArrayList<Produto>();
   }
 
   /**
@@ -26,10 +27,6 @@ public class Categoria {
    * @param produto Produto a ser adicionado.
    **/
   public void adicionarProduto(Produto produto) {
-    Categoria categoria = produto.getCategoria();
-    if(categoria == null) {
-      produto.setCategoria(this);
-    }
     if(!listaProdutos.contains(produto)) {
       listaProdutos.add(produto);
     }
@@ -43,10 +40,6 @@ public class Categoria {
    * @param produto Produto a ser removido.
    **/
   public void removerProduto(Produto produto) {
-    Categoria categoria = produto.getCategoria();
-    if(categoria != null) {
-      produto.setCategoria(null);
-    }
     if(listaProdutos.contains(produto)) {
       listaProdutos.remove(produto);
     }

@@ -1,3 +1,4 @@
 **/target/
 **/.settings/
 **/bd/compras.txt
+.classpath
