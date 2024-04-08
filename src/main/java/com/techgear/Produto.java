@@ -1,6 +1,11 @@
 package com.techgear;
 
-abstract class Produto {
+/**
+ * Classe abstrata que representa um produto.
+ * @version 1.0
+ * @since 2024-04-08
+ **/
+public abstract class Produto {
   private int id;
   private String nome;
   private double preco;

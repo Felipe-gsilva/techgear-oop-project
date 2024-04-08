@@ -10,9 +10,6 @@ public class FileHandler {
   private File produtosFisicos = new File("/home/felipe-gsilva/.dev/oop-project/bd/produtoFisico.txt");
   private File produtosVirtuais = new File("/home/felipe-gsilva/.dev/oop-project/bd/produtoVirtual.txt");
 
-  public FileHandler() {
-  }
-
   public void loadFiles(Loja loja) throws FileNotFoundException {
     loadCategorias(getCategorias(), loja);
     loadProdutosFisicos(getProdutosFisicos(), loja);
@@ -65,9 +62,9 @@ public class FileHandler {
         dados[6] = dados[6].substring(0, dados[6].length() - 2);
         ProdutoVirtual produtoVirtual = new ProdutoVirtual(Integer.valueOf(dados[0]), dados[1], Double.valueOf(dados[2]), dados[3], dados[4], categoria, Double.valueOf(dados[6]), dados[7]);
         loja.adicionarProduto(categoria, produtoVirtual);
-      
-    }
-  } catch (FileNotFoundException e) {
+
+      }
+    } catch (FileNotFoundException e) {
       System.out.println("Arquivo não encontrado." + e.getMessage());
       e.printStackTrace();
     }
@@ -81,28 +78,26 @@ public class FileHandler {
     } catch (Exception e) {
       Logger.log(e.getMessage() ,7);
     }
-    
   }
 
 
+  public void setCategoria(File categorias) {
+    this.categorias = categorias;
+  }
+  public void setProdutosFisicos(File produtosFisicos) {
+    this.produtosFisicos = produtosFisicos;
+  }
+  public void setProdutosVirtuais(File produtosVirtuais) {
+    this.produtosVirtuais = produtosVirtuais;
+  }
 
-    public void setCategoria(File categorias) {
-      this.categorias = categorias;
-    }
-    public void setProdutosFisicos(File produtosFisicos) {
-      this.produtosFisicos = produtosFisicos;
-    }
-    public void setProdutosVirtuais(File produtosVirtuais) {
-      this.produtosVirtuais = produtosVirtuais;
-    }
-
-    public File getCategorias() {
-      return categorias;
-    }
-    public File getProdutosFisicos() {
-      return produtosFisicos;
-    }
-    public File getProdutosVirtuais() {
+  public File getCategorias() {
+    return categorias;
+  }
+  public File getProdutosFisicos() {
+    return produtosFisicos;
+  }
+  public File getProdutosVirtuais() {
     return produtosVirtuais;
   }
 }

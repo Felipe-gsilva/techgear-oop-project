@@ -1,7 +1,6 @@
 package com.techgear.util;
 
 public class Logger { 
-
   public static void log(String nome, int code) {
     System.out.println("Error code: " + code + " - " + nome);
     switch (code) {

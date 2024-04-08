@@ -1,5 +1,8 @@
 package com.techgear;
 
+import java.io.*;
+import com.techgear.util.FileHandler;
+
 public class ProdutoVirtual extends Produto {
   private double tamanhoArquivo;
   private String formato;
@@ -14,9 +17,20 @@ public class ProdutoVirtual extends Produto {
     this.formato = formato;
   }
   
-  public void realizarDownload(ProdutoVirtual produtoVirtual) {
+  /**
+   * Realiza o download de um arquivo.
+   * @param produtoVirtual ProdutoVirtual a ser baixado.
+   **/
+  public void realizarDownload(ProdutoVirtual produtoVirtual) throws IOException {
+    File arquivo = new File(produtoVirtual.getNome() + "." + produtoVirtual.getFormato());
     System.out.println("Realizando download do arquivo " + produtoVirtual.getNome() + "...");
-    //implement this
+    String string = "Arquivo: " + produtoVirtual.getNome() + "\n" + "Tamanho: " + produtoVirtual.getTamanhoArquivo() + "GB\n";
+    FileHandler.writeToFile(arquivo, string);
+    if(arquivo.exists()){
+      System.out.println("Download do arquivo " + produtoVirtual.getNome() + " realizado com sucesso.");
+    } {
+      throw new IOException("Erro ao realizar download do arquivo.");
+    }
   }
 
 

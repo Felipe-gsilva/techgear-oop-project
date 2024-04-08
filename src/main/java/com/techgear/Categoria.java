@@ -4,21 +4,27 @@ import java.util.ArrayList;
 import java.lang.String;
 import com.techgear.util.Logger;
 
+/**
+ * Classe que representa uma categoria de produtos.
+ * @version 1.0
+ * @since 2024-04-08
+ **/
 public class Categoria {
   private int codigo;
   private String nome;
   private String descricao;
-  private ArrayList<Produto> listaProdutos = new ArrayList<Produto>();  
+  private ArrayList<Produto> listaProdutos = new ArrayList<>();  
   
-  public Categoria() {
-  }
-
   public Categoria(int codigo, String nome, String descricao) {
     this.codigo = codigo;
     this.nome = nome;
     this.descricao = descricao;
   }
 
+  /**
+   * Adiciona um produto na categoria.
+   * @param produto Produto a ser adicionado.
+   **/
   public void adicionarProduto(Produto produto) {
     Categoria categoria = produto.getCategoria();
     if(categoria == null) {
@@ -32,6 +38,10 @@ public class Categoria {
     }
   }
 
+  /**
+   * Remove um produto da categoria.
+   * @param produto Produto a ser removido.
+   **/
   public void removerProduto(Produto produto) {
     Categoria categoria = produto.getCategoria();
     if(categoria != null) {
@@ -45,6 +55,11 @@ public class Categoria {
     }
   }
 
+  /**
+   * Busca um produto na categoria.
+   * @param id ID do produto a ser buscado.
+   * @return Produto encontrado.
+   **/
   public Produto buscarProduto(int id) {
     for(Produto produto : listaProdutos) {
       if(produto.getId() == id)
@@ -53,6 +68,11 @@ public class Categoria {
     return null;
   }
 
+  /**
+   * Busca um produto na categoria.
+   * @param nome Nome do produto a ser buscado.
+   * @return Produto encontrado.
+   **/
   public Produto buscarProduto(String nome) {
     for(Produto produto : listaProdutos) {
       if(produto.getNome().equals(nome))
@@ -61,6 +81,9 @@ public class Categoria {
     return null;
   }
 
+  /**
+   * Lista os produtos da categoria.
+   **/
   public void listarProdutos() {
     System.out.println("------->Produtos da categoria "+nome+":");
     if(listaProdutos.isEmpty()) {
@@ -98,5 +121,4 @@ public class Categoria {
   public ArrayList<Produto> getListaProdutos() {
     return listaProdutos;
   }
-
 }
