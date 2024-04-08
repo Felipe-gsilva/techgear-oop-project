@@ -10,7 +10,6 @@ public class Categoria {
   private ArrayList<Produto> listaProdutos = new ArrayList<Produto>();  
   
   public Categoria() {
-
   }
 
   public Categoria(int codigo, String nome, String descricao) {
@@ -48,8 +47,9 @@ public class Categoria {
   }
 
   public void listarProdutos() {
+    System.out.println("------->Produtos da categoria "+nome+":");
     for(Produto produto : listaProdutos) {
-        System.out.println(">"+produto.getId()+" - "+produto.getNome());
+        System.out.println(">"+produto.getId()+" - "+produto.getNome()+" - "+produto.getPreco());
     }
   }
 

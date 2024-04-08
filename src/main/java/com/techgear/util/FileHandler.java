@@ -1,9 +1,9 @@
 package com.techgear.util;
 
 import java.util.Scanner;
-import java.io.FileNotFoundException;
-import java.io.File;
+import java.io.*;
 import com.techgear.*;
+import com.techgear.util.Logger;
 
 public class FileHandler {
   private File categorias = new File("/home/felipe-gsilva/.dev/oop-project/bd/categorias.txt");
@@ -73,23 +73,36 @@ public class FileHandler {
     }
   } 
 
-  public void setCategoria(File categorias) {
-    this.categorias = categorias;
-  }
-  public void setProdutosFisicos(File produtosFisicos) {
-    this.produtosFisicos = produtosFisicos;
-  }
-  public void setProdutosVirtuais(File produtosVirtuais) {
-    this.produtosVirtuais = produtosVirtuais;
+  public static void writeToFile(File file, String data) {
+    try {
+      java.io.FileWriter out = new java.io.FileWriter(file, true);
+      out.write(data);
+      out.close();
+    } catch (Exception e) {
+      Logger.log(e.getMessage() ,7);
+    }
+    
   }
 
-  public File getCategorias() {
-    return categorias;
-  }
-  public File getProdutosFisicos() {
-    return produtosFisicos;
-  }
-  public File getProdutosVirtuais() {
+
+
+    public void setCategoria(File categorias) {
+      this.categorias = categorias;
+    }
+    public void setProdutosFisicos(File produtosFisicos) {
+      this.produtosFisicos = produtosFisicos;
+    }
+    public void setProdutosVirtuais(File produtosVirtuais) {
+      this.produtosVirtuais = produtosVirtuais;
+    }
+
+    public File getCategorias() {
+      return categorias;
+    }
+    public File getProdutosFisicos() {
+      return produtosFisicos;
+    }
+    public File getProdutosVirtuais() {
     return produtosVirtuais;
   }
 }

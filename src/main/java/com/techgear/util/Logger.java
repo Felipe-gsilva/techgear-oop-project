@@ -14,6 +14,15 @@ public class Logger {
       case 3:
         System.out.println("Erro ao remover");
         break;
+      case 4:
+        System.out.println("ID ja existe");
+        break;
+      case 5:
+        System.out.println("Erro ao atualizar");
+        break;
+      case 6:
+        System.out.println("Erro ao buscar");
+        break;
     }
   }
 }
