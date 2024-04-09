@@ -194,3 +194,4 @@ public class Loja {
     return listaCategorias;
   }
 }
+
