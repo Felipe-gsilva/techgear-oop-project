@@ -3,12 +3,11 @@ package com.techgear.util;
 import java.util.Scanner;
 import java.io.*;
 import com.techgear.*;
-import com.techgear.util.Logger;
 
 public class FileHandler {
-  private File categorias = new File("/home/felipe-gsilva/.dev/oop-project/bd/categorias.txt");
-  private File produtosFisicos = new File("/home/felipe-gsilva/.dev/oop-project/bd/produtoFisico.txt");
-  private File produtosVirtuais = new File("/home/felipe-gsilva/.dev/oop-project/bd/produtoVirtual.txt");
+  private File categorias = new File("./bd/categorias.txt");
+  private File produtosFisicos = new File("./bd/produtoFisico.txt");
+  private File produtosVirtuais = new File("./bd/produtoVirtual.txt");
 
   public void loadFiles(Loja loja) throws FileNotFoundException {
     loadCategorias(getCategorias(), loja);

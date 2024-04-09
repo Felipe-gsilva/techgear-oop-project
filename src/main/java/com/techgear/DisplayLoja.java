@@ -30,7 +30,6 @@ public class DisplayLoja {
         System.out.println("2 - Gerenciar categorias");
         System.out.println("3 - Listar produtos");
         System.out.println("4 - Listar categorias");
-
         System.out.println("8 - Informações da loja");
         System.out.println("9 - Gerenciar carrinho");
         System.out.println("0 - Sair");
@@ -93,7 +92,8 @@ public class DisplayLoja {
         System.out.println("3 - Remover do carrinho");
         System.out.println("4 - Realizar compra");
         System.out.println("5 - Listar produtos disponíveis");
-        System.out.println("0 - Sair");
+        System.out.println("6 - Listar categorias");
+        System.out.println("0 - Voltar");
         System.out.println("---------------------------");
         opCarrinho = sc.nextInt();
         sc.nextLine();
@@ -124,6 +124,10 @@ public class DisplayLoja {
           case 5:
           loja.listarProdutos();
           break;
+          case 6:
+          loja.listarCategorias();
+          case 0:
+          break;
           default:
           System.out.println("Opção inválida.");
           break;
@@ -143,7 +147,7 @@ public class DisplayLoja {
 
   private void realizarCompra(ArrayList<Produto> carrinho) throws IOException, FileNotFoundException {
     /** variavel out recebe o caminho do arquivo onde será salvo o arquivo de compras */
-    File out = new File("/home/felipe-gsilva/.dev/oop-project/bd/compras.txt");
+    File out = new File("./bd/compras.txt");
     double total = 0.0;
     for (Produto produto : carrinho) {
       total += produto.getPreco();
@@ -298,6 +302,8 @@ public class DisplayLoja {
           sc.nextLine();
           loja.buscarProduto(idProduto).atualizarPreco(precoProduto);
           break;
+          case 0:
+          break;
           default:
           System.out.println("Opção inválida.");
           break;
@@ -311,118 +317,122 @@ public class DisplayLoja {
   /**
    * Exibe a tela de gerenciamento de categorias.
    */
-    public void gerenciarCategoria() {
-      try {
-        Scanner sc = new Scanner(System.in);
-        int opCategoria = -1;
-        int idCategoria = 0;
-        String nomeCategoria = "";
-        String descricaoCategoria = "";
+  public void gerenciarCategoria() {
+    try {
+      Scanner sc = new Scanner(System.in);
+      int opCategoria = -1;
+      int idCategoria = 0;
+      String nomeCategoria = "";
+      String descricaoCategoria = "";
 
-        while(opCategoria != 0) {
-          System.out.println("----------Categorias----------");
-          System.out.println("1 - Adicionar categoria");
-          System.out.println("2 - Remover categoria");
-          System.out.println("3 - Listar categorias");
-          System.out.println("0 - Voltar");
-          System.out.println("------------------------------");
+      while(opCategoria != 0) {
+        System.out.println("----------Categorias----------");
+        System.out.println("1 - Adicionar categoria");
+        System.out.println("2 - Remover categoria");
+        System.out.println("3 - Listar categorias");
+        System.out.println("0 - Voltar");
+        System.out.println("------------------------------");
 
-          opCategoria = sc.nextInt();
-          sc.nextLine();
-          switch (opCategoria) {
-            case 1:
-            /** 
+        opCategoria = sc.nextInt();
+        sc.nextLine();
+        switch (opCategoria) {
+          case 1:
+          /** 
              * Adiciona uma categoria.
              */
-            System.out.println("Digite o ID da categoria:");
-            idCategoria = sc.nextInt();
-            sc.nextLine();
-            System.out.println("Digite o nome da categoria:");
-            nomeCategoria = sc.nextLine();
-            System.out.println("Digite a descrição da categoria:");
-            descricaoCategoria = sc.nextLine();
-            Categoria categoria = new Categoria(idCategoria, nomeCategoria, descricaoCategoria);
-            loja.adicionarCategoria(categoria);
-            break;
+          System.out.println("Digite o ID da categoria:");
+          idCategoria = sc.nextInt();
+          sc.nextLine();
+          System.out.println("Digite o nome da categoria:");
+          nomeCategoria = sc.nextLine();
+          System.out.println("Digite a descrição da categoria:");
+          descricaoCategoria = sc.nextLine();
+          Categoria categoria = new Categoria(idCategoria, nomeCategoria, descricaoCategoria);
+          loja.adicionarCategoria(categoria);
+          break;
 
-            case 2:
-            /** 
+          case 2:
+          /** 
              * Remove uma categoria.
              */
-            System.out.println("Digite o id da categoria que deseja remover: ");
-            idCategoria = sc.nextInt();
-            loja.removerCategoria(idCategoria);
-            break;
-            case 3:
-            System.out.println("----------Categorias----------");
-            loja.listarCategorias();
-            System.out.println("----------------------------");
-            break;
-            default:
-            System.out.println("Opção inválida.");
-            break;
-          }
+          System.out.println("Digite o id da categoria que deseja remover: ");
+          idCategoria = sc.nextInt();
+          loja.removerCategoria(idCategoria);
+          break;
+          case 3:
+          System.out.println("----------Categorias----------");
+          loja.listarCategorias();
+          System.out.println("----------------------------");
+          break;
+          case 0: 
+          break;
+          default:
+          System.out.println("Opção inválida.");
+          break;
         }
-      } catch (Exception e) {
-        System.err.println("Erro ao gerenciar categoria: " + e.getMessage()); 
       }
+    } catch (Exception e) {
+      System.err.println("Erro ao gerenciar categoria: " + e.getMessage()); 
     }
+  }
 
-    /**
+  /**
      * Busca um produto.
      */
-    private void buscarProduto() {
-      System.out.println("Digite o nome do produto que deseja buscar: ");
-      String nomeProduto = System.console().readLine();
-      Produto produto = loja.buscarProduto(nomeProduto);
-      if (produto != null) {
-        System.out.println(produto.getNome());
-      } else {
-        System.out.println("Produto não encontrado.");
-      }
+  private void buscarProduto() {
+    System.out.println("Digite o nome do produto que deseja buscar: ");
+    String nomeProduto = System.console().readLine();
+    Produto produto = loja.buscarProduto(nomeProduto);
+    if (produto != null) {
+      System.out.println(produto.getNome());
+    } else {
+      System.out.println("Produto não encontrado.");
     }
+  }
 
-    /**
+  /**
      * Adiciona um produto ao carrinho.
      * @param produto Produto
      */
-    private void adicionarAoCarrinho(Produto produto) {
-      if(carrinho.add(produto)) {
-        System.out.println("Produto adicionado ao carrinho.");
-      } else {
-        Logger.log(produto.getNome(), 2);
-      }
-
+  private boolean adicionarAoCarrinho(Produto produto) {
+    boolean check;
+    if(carrinho.add(produto)) {
+      check = true;
+    } else {
+      Logger.log(produto.getNome(), 2);
+      return check = false;
     }
+    return check;
+  }
 
-    /**
+  /**
      * Remove um produto do carrinho.
      * @param produto Produto
      */
-    private void removerDoCarrinho(Produto produto) {
-      if(carrinho.remove(produto)) {
-        System.out.println("Produto removido do carrinho.");
-      } else {
-        Logger.log(produto.getNome(), 3);
-      }
+  private void removerDoCarrinho(Produto produto) {
+    if(carrinho.remove(produto)) {
+      System.out.println("Produto removido do carrinho.");
+    } else {
+      Logger.log(produto.getNome(), 3);
     }
+  }
 
-    /**
+  /**
      * Exibe o carrinho.
      */
-    private void exibirCarrinho() {
-      System.out.println("Produtos no carrinho: ");
-      int i = 0;
-      for (Produto produto : carrinho) {
-        System.out.println("- Produto " + i++ + ": - "+produto.getId()+": "+ produto.getNome() + " | Preço: " + produto.getPreco());
-      }
+  private void exibirCarrinho() {
+    System.out.println("Produtos no carrinho: ");
+    int i = 0;
+    for (Produto produto : carrinho) {
+      System.out.println("- Produto " + i++ + ": - "+produto.getId()+": "+ produto.getNome() + " | Preço: " + produto.getPreco());
     }
-    
-    public void setCarrinho(ArrayList<Produto> carrinho) {
-      this.carrinho = carrinho;
-    }
+  }
 
-    public ArrayList<Produto> getCarrinho() {
+  public void setCarrinho(ArrayList<Produto> carrinho) {
+    this.carrinho = carrinho;
+  }
+
+  public ArrayList<Produto> getCarrinho() {
     return carrinho;
   }
 }
