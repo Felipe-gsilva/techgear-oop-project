@@ -3,17 +3,56 @@ package com.techgear.util;
 import java.util.Scanner;
 import java.io.*;
 import com.techgear.*;
+import com.techgear.util.Logger;
 
+/**
+ * Classe que manipula arquivos.
+ * @version 1.0
+ * @since 2024-04-08
+ * @see Loja
+ * @see Categoria
+ * @see ProdutoFisico
+ * @see ProdutoVirtual
+ * @see Logger
+ */
 public class FileHandler {
+  /**
+   * Arquivo que contem as categorias.
+   */
   private File categorias = new File("./bd/categorias.txt");
+  /**
+   * Arquivo que contem os produtos fisicos. 
+   */
   private File produtosFisicos = new File("./bd/produtoFisico.txt");
+  /**
+   * Arquivo que contem os produtos virtuais.
+   */
   private File produtosVirtuais = new File("./bd/produtoVirtual.txt");
+
+  /**
+   * Construtor vazio da classe FileHandler.
+   */
+  public FileHandler() {
+  }
+
+  /**
+   * Carrega os arquivos de categorias, produtos fisicos e produtos virtuais.
+   * @param loja Loja a ser carregada.
+   * @throws FileNotFoundException Excecao de arquivo nao encontrado.
+   */
 
   public void loadFiles(Loja loja) throws FileNotFoundException {
     loadCategorias(getCategorias(), loja);
     loadProdutosFisicos(getProdutosFisicos(), loja);
     loadProdutosVirtuais(getProdutosVirtuais(), loja);
   }
+
+/**
+   * Carrega as categorias de um arquivo.
+   * @param categorias Arquivo de categorias.
+   * @param loja Loja a ser carregada.
+   */
+
   public void loadCategorias(File categorias, Loja loja) {
     try {
       Scanner scanner = new Scanner(categorias);
@@ -31,6 +70,11 @@ public class FileHandler {
     }
   } 
 
+  /**
+   * Carrega os produtos fisicos de um arquivo.
+   * @param produtosFisicos Arquivo de produtos fisicos.
+   * @param loja Loja a ser carregada.
+   */
   public void loadProdutosFisicos(File produtosFisicos, Loja loja) {
     try {
       Scanner scanner = new Scanner(produtosFisicos);
@@ -49,6 +93,12 @@ public class FileHandler {
       e.printStackTrace();
     }
   } 
+
+  /**
+   * Carrega os produtos virtuais de um arquivo.
+   * @param produtosVirtuais Arquivo de produtos virtuais.
+   * @param loja Loja a ser carregada.
+   */
   public void loadProdutosVirtuais(File produtosVirtuais, Loja loja) {
     try {
       Scanner scanner = new Scanner(produtosVirtuais);
@@ -69,6 +119,11 @@ public class FileHandler {
     }
   } 
 
+  /**
+   * Escreve em um arquivo enviado como argumento.
+   * @param file Arquivo a ser escrito.
+   * @param data Dados a serem escritos.
+   */
   public static void writeToFile(File file, String data) {
     try {
       java.io.FileWriter out = new java.io.FileWriter(file, true);
@@ -80,22 +135,47 @@ public class FileHandler {
   }
 
 
+  /**
+   * Atualiza o arquivo de categorias.
+   * @param categorias Arquivo de categorias.
+   */
   public void setCategoria(File categorias) {
     this.categorias = categorias;
   }
+  /**
+   * Atualiza o arquivo de produtos fisicos.
+   * @param produtosFisicos Arquivo de produtos fisicos.
+   */
   public void setProdutosFisicos(File produtosFisicos) {
     this.produtosFisicos = produtosFisicos;
   }
+  /**
+   * Atualiza o arquivo de produtos virtuais.
+   * @param produtosVirtuais Arquivo de produtos virtuais.
+   */
   public void setProdutosVirtuais(File produtosVirtuais) {
     this.produtosVirtuais = produtosVirtuais;
   }
 
+  /**
+   * Retorna o arquivo de categorias.
+   * @return Arquivo de categorias.
+   */
   public File getCategorias() {
     return categorias;
   }
+  /**
+   * Retorna o arquivo de produtos fisicos.
+   * @return Arquivo de produtos fisicos.
+   */
   public File getProdutosFisicos() {
     return produtosFisicos;
   }
+
+  /**
+   * Retorna o arquivo de produtos virtuais.
+   * @return Arquivo de produtos virtuais.
+   */
   public File getProdutosVirtuais() {
     return produtosVirtuais;
   }

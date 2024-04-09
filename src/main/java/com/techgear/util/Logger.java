@@ -1,6 +1,25 @@
 package com.techgear.util;
 
+/**
+ * Classe que implementa um logger para a aplicaçã, com valores padrões de erro baseados em códigos.
+ * 
+ * @version 1.0
+ * @author Felipe Gomes da Silva
+ * @since 2024-04-08
+ */
+
 public class Logger { 
+  /**
+   * Construtor vazio da classe Logger.
+   */
+  public Logger() {
+  }
+
+  /**
+   * Método que imprime uma mensagem de erro baseada em um código.
+   * @param nome Nome do objeto que gerou o erro.
+   * @param code Código do erro.
+   */
   public static void log(String nome, int code) {
     System.out.println("Error code: " + code + " - " + nome);
     switch (code) {

@@ -8,13 +8,28 @@ import com.techgear.util.Logger;
  * Classe que representa uma categoria de produtos.
  * @version 1.0
  * @since 2024-04-08
+ * @author Felipe Gomes da Silva
+ * @see Produto
+ * @see Logger
+ * @see ProdutoVirtual
+ * @see ProdutoFisico
  **/
 public class Categoria {
-  private int codigo;
+  /** Código da categoria. **/
+  private int codigo; 
+  /** Nome da categoria. **/
   private String nome;
+  /** Descrição da categoria. **/
   private String descricao;
+  /** Lista de produtos da categoria. **/
   private ArrayList<Produto> listaProdutos;
   
+  /**
+   * Construtor da classe Categoria.
+   * @param codigo Código da categoria.
+   * @param nome Nome da categoria.
+   * @param descricao Descrição da categoria.
+   **/
   public Categoria(int codigo, String nome, String descricao) {
     this.codigo = codigo;
     this.nome = nome;
@@ -88,29 +103,63 @@ public class Categoria {
     }
   }
 
+  /**
+   * atualiza o codigo 
+   * @param codigo Codigo da categoria
+   */
   public void setCodigo(int codigo) {
     this.codigo = codigo;
   }
 
+  /**
+   * atualiza o nome
+   * @param nome Nome da categoria
+   */
   public void setNome(String nome) {
     this.nome = nome;
   }
+
+  /**
+   * atualiza a descricao
+   * @param descricao Descricao da categoria
+   */
   public void setDescricao(String descricao) {
     this.descricao = descricao;
   }
+
+  /**
+   * atualiza a lista de produtos
+   * @param listaProdutos Lista de produtos da categoria
+   */
   public void setListaProdutos(ArrayList<Produto> listaProdutos) {
     this.listaProdutos = listaProdutos;
   }
 
+ /** 
+   * retorna o codigo
+   * @return Codigo da categoria
+   */
   public int getCodigo() {
     return codigo;
   }
+  /**
+   * retorna o nome
+   * @return Nome da categoria
+   */
   public String getNome() {
     return nome;
   }
+  /**
+   * retorna a descricao
+   * @return Descricao da categoria
+   */
   public String getDescricao() { 
     return descricao;
   }
+  /**
+   * retorna a lista de produtos
+   * @return Lista de produtos da categoria
+   */
   public ArrayList<Produto> getListaProdutos() {
     return listaProdutos;
   }

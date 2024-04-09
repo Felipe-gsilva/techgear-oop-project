@@ -19,10 +19,12 @@ public class DisplayLoja {
    */
   public void telaUsuario() {
     try {
+       /** instancia o objeto fileHandler, responsavel por gerenciar os arquivos */
       FileHandler fileHandler = new FileHandler();
       fileHandler.loadFiles(loja);
+      /** instancia o objeto scanner para receber a entrada do usuario */
       Scanner sc = new Scanner(System.in);
-
+      /** variavel op recebe a opção escolhida pelo usuario */
       int op = -1;
       System.out.println("Bem-vindo à loja " + loja.getNome());
       while (op != 0) {
@@ -35,9 +37,6 @@ public class DisplayLoja {
         System.out.println("0 - Sair");
         op = sc.nextInt();
         sc.nextLine();
-        /** 
-         * Switch case para exibir as opções do menu.
-         */
         switch (op) {
           case 1:
           gerenciarProduto(); 
@@ -63,6 +62,9 @@ public class DisplayLoja {
           case 9:
           gerenciarCarrinho();
           break;
+          case 0:
+          System.out.println("Saindo...");
+          break;
           default: 
           System.out.println("Opção inválida.");
           break;
@@ -71,15 +73,16 @@ public class DisplayLoja {
 
     } catch (FileNotFoundException e) {
       System.out.println("Arquivo não encontrado." + e.getMessage());
+    } catch (IOException e) {
+      System.out.println("Erro ao ler arquivo." + e.getMessage());
     } catch (Exception e) {
       System.out.println("Erro ao exibir tela de usuário." + e.getMessage());
     }
   }
 
-  /**
+ /**
    * Exibe a tela de gerenciamento do carrinho.
    */
-
   private void gerenciarCarrinho() {
     try {
       Scanner sc = new Scanner(System.in);
@@ -113,9 +116,11 @@ public class DisplayLoja {
             adicionarAoCarrinho(produto);
           }
           break;
-          case 3:System.out.println("Digite o nome do produto que deseja remover: ");
-          String nomeProduto = sc.nextLine(); 
-          produto = loja.buscarProduto(nomeProduto);
+          case 3:
+          System.out.println("Digite o id do produto que deseja remover: ");
+          idProduto = sc.nextInt();
+          sc.nextLine();
+          produto = loja.buscarProduto(idProduto);
           removerDoCarrinho(produto);
           break;
           case 4:
@@ -141,12 +146,14 @@ public class DisplayLoja {
   /** 
    * Realiza a compra dos produtos no carrinho.
    * @param carrinho ArrayList de produtos
-   * @throws IOException
-   * @throws FileNotFoundException
    */
 
-  private void realizarCompra(ArrayList<Produto> carrinho) throws IOException, FileNotFoundException {
+  private void realizarCompra(ArrayList<Produto> carrinho) throws Exception {
     /** variavel out recebe o caminho do arquivo onde será salvo o arquivo de compras */
+    if (carrinho.isEmpty()) {
+      throw new Exception("Carrinho vazio.");
+    }
+
     File out = new File("./bd/compras.txt");
     double total = 0.0;
     for (Produto produto : carrinho) {
@@ -154,7 +161,8 @@ public class DisplayLoja {
       if (produto instanceof ProdutoFisico) {
         total += ((ProdutoFisico) produto).calcularFrete(produto);
       }
-      FileHandler.writeToFile(out, produto.toString());
+      FileHandler.writeToFile(out, produto.toString()); 
+      //WARN alterar isso daq
     }
     System.out.println("Total da compra: " + total);
     FileHandler.writeToFile(out, "Total da compra: " + total);
@@ -166,9 +174,12 @@ public class DisplayLoja {
    */
   public void gerenciarProduto() {
     try {
+      /** instancia o objeto scanner para receber a entrada do usuario */
       Scanner sc = new Scanner(System.in);
+      /** variavel opProduto recebe a opção escolhida pelo usuario */
       int opProduto = -1;
 
+      /** variaveis para receber os dados do produto */
       int idProduto = 0;
       int idCategoria = 0;
       String nomeProduto = "";
@@ -186,6 +197,7 @@ public class DisplayLoja {
         System.out.println("5 - Buscar produto");
         System.out.println("6 - Atualizar estoque");
         System.out.println("7 - Atualizar preço");
+        System.out.println("8 - Listar categorias");
         System.out.println("0 - Voltar");
         System.out.println("---------------------------");
         opProduto = sc.nextInt();
@@ -220,10 +232,17 @@ public class DisplayLoja {
           System.out.println("Digite a altura, a largura e a profundidade do produto:");
           dimensoes = sc.nextLine();
 
+          /** 
+           * Cria o objeto produto fisico e adiciona na loja.
+           */
           ProdutoFisico produtoFisico = new ProdutoFisico(idProduto, nomeProduto, precoProduto, descricaoProduto, marca,categoria, peso, dimensoes);
           loja.adicionarProduto(produtoFisico.getCategoria(), produtoFisico);
           break;
           case 2:
+
+          /** 
+           * Variaveis para receber os dados do produto virtual.
+           */
           double tamanho = 0.0;
           String formato = "";
 
@@ -252,6 +271,9 @@ public class DisplayLoja {
           System.out.println("Digite o formato:");
           formato = sc.nextLine();
 
+          /** 
+           * Cria o objeto produto virtual e adiciona na loja.
+           */
           Produto produtoVirtual = new ProdutoVirtual(idProduto, nomeProduto, precoProduto, descricaoProduto, marca,categoria, tamanho, formato);
           loja.adicionarProduto(produtoVirtual.getCategoria(), produtoVirtual);
           break;
@@ -261,6 +283,10 @@ public class DisplayLoja {
            */
           System.out.println("Digite o id do produto que deseja remover: ");
           idProduto = sc.nextInt();
+          if(loja.buscarProduto(idProduto) == null) {
+            throw new Exception("Produto não encontrado.");
+          }
+
           loja.removerProduto(idProduto);
           break;
 
@@ -302,6 +328,9 @@ public class DisplayLoja {
           sc.nextLine();
           loja.buscarProduto(idProduto).atualizarPreco(precoProduto);
           break;
+          case 8:
+          loja.listarCategorias();
+          break;
           case 0:
           break;
           default:
@@ -319,8 +348,11 @@ public class DisplayLoja {
    */
   public void gerenciarCategoria() {
     try {
+      /** instancia o objeto scanner para receber a entrada do usuario */
       Scanner sc = new Scanner(System.in);
+      /** variavel opCategoria recebe a opção escolhida pelo usuario */
       int opCategoria = -1;
+      /** variaveis para receber os dados da categoria */
       int idCategoria = 0;
       String nomeCategoria = "";
       String descricaoCategoria = "";
@@ -357,6 +389,10 @@ public class DisplayLoja {
              */
           System.out.println("Digite o id da categoria que deseja remover: ");
           idCategoria = sc.nextInt();
+          sc.nextLine();
+          if(loja.buscarCategoria(idCategoria) == null) {
+            throw new Exception("Categoria não encontrada.");
+          }
           loja.removerCategoria(idCategoria);
           break;
           case 3:
@@ -380,13 +416,15 @@ public class DisplayLoja {
      * Busca um produto.
      */
   private void buscarProduto() {
+    /** instancia o objeto scanner para receber a entrada do usuario */
+    Scanner sc = new Scanner(System.in);
     System.out.println("Digite o nome do produto que deseja buscar: ");
-    String nomeProduto = System.console().readLine();
+    String nomeProduto = sc.nextLine(); 
     Produto produto = loja.buscarProduto(nomeProduto);
     if (produto != null) {
       System.out.println(produto.getNome());
     } else {
-      System.out.println("Produto não encontrado.");
+      Logger.log(nomeProduto, 1);
     }
   }
 
@@ -428,10 +466,18 @@ public class DisplayLoja {
     }
   }
 
+/**
+     * Atualiza o carrinho 
+     * @param carrinho ArrayList de produtos 
+     */
   public void setCarrinho(ArrayList<Produto> carrinho) {
     this.carrinho = carrinho;
   }
 
+/**
+     * Retorna o carrinho.
+     * @return ArrayList de produtos
+     */
   public ArrayList<Produto> getCarrinho() {
     return carrinho;
   }
