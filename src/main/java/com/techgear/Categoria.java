@@ -1,7 +1,6 @@
 package com.techgear;
 
 import java.util.ArrayList;
-import java.lang.String;
 import com.techgear.util.Logger;
 
 /**

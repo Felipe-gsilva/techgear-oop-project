@@ -3,10 +3,9 @@ package com.techgear.util;
 import java.util.Scanner;
 import java.io.*;
 import com.techgear.*;
-import com.techgear.util.Logger;
 
 /**
- * Classe que manipula arquivos.
+ * Classe que manipula os arquivos.
  * @version 1.0
  * @since 2024-04-08
  * @see Loja
@@ -55,18 +54,17 @@ public class FileHandler {
 
   public void loadCategorias(File categorias, Loja loja) {
     try {
-      Scanner scanner = new Scanner(categorias);
-      String linha = scanner.nextLine(); 
+      Scanner sc = new Scanner(categorias);
+      String linha = sc.nextLine(); 
       String[] dados;
-      while(scanner.hasNextLine()) {
-        linha = scanner.nextLine();
+      while(sc.hasNextLine()) {
+        linha = sc.nextLine();
         dados = linha.split("#");
-        Categoria categoria = new Categoria(Integer.valueOf(dados[0]), dados[1], dados[2]);
+        Categoria categoria = new Categoria(Integer.parseInt(dados[0]), dados[1], dados[2]);
         loja.adicionarCategoria(categoria);
       }
     } catch (FileNotFoundException e) {
       System.out.println("Arquivo não encontrado." + e.getMessage());
-      e.printStackTrace();
     }
   } 
 
@@ -77,20 +75,19 @@ public class FileHandler {
    */
   public void loadProdutosFisicos(File produtosFisicos, Loja loja) {
     try {
-      Scanner scanner = new Scanner(produtosFisicos);
-      String linha = scanner.nextLine(); 
+      Scanner sc = new Scanner(produtosFisicos);
+      String linha = sc.nextLine(); 
       String[] dados;
-      while(scanner.hasNextLine()) {
-        linha = scanner.nextLine();
+      while(sc.hasNextLine()) {
+        linha = sc.nextLine();
         dados = linha.split("#");
-        Categoria categoria = loja.buscarCategoria(Integer.valueOf(dados[5]));
-        ProdutoFisico produtoFisico = new ProdutoFisico(Integer.valueOf(dados[0]), dados[1], Double.valueOf(dados[2]), dados[3], dados[4], categoria, Double.valueOf(dados[6]), dados[7]);
+        Categoria categoria = loja.buscarCategoria(Integer.parseInt(dados[5]));
+        ProdutoFisico produtoFisico = new ProdutoFisico(Integer.parseInt(dados[0]), dados[1], Double.parseDouble(dados[2]), dados[3], dados[4], categoria, Double.parseDouble(dados[6]), dados[7]);
         loja.adicionarProduto(categoria, produtoFisico);
 
       }
     } catch (FileNotFoundException e) {
       System.out.println("Arquivo não encontrado." + e.getMessage());
-      e.printStackTrace();
     }
   } 
 
@@ -115,7 +112,6 @@ public class FileHandler {
       }
     } catch (FileNotFoundException e) {
       System.out.println("Arquivo não encontrado." + e.getMessage());
-      e.printStackTrace();
     }
   } 
 
@@ -129,7 +125,7 @@ public class FileHandler {
       java.io.FileWriter out = new java.io.FileWriter(file, true);
       out.write(data);
       out.close();
-    } catch (Exception e) {
+    } catch (IOException e) {
       Logger.log(e.getMessage() ,7);
     }
   }

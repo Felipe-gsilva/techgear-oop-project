@@ -11,7 +11,7 @@ import java.util.Scanner;
  * @since 2024-04-08
  **/
 public class DisplayLoja {
-  private Loja loja = new Loja("TechGear", "123456789", "Rua de Verdade, 128");
+  private final Loja loja = new Loja("TechGear", "123456789", "Rua de Verdade, 128");
   private ArrayList<Produto> carrinho = new ArrayList<>();
 
   /**
@@ -37,6 +37,7 @@ public class DisplayLoja {
         System.out.println("0 - Sair");
         op = sc.nextInt();
         sc.nextLine();
+        
         switch (op) {
           case 1:
           gerenciarProduto(); 
@@ -73,8 +74,6 @@ public class DisplayLoja {
 
     } catch (FileNotFoundException e) {
       System.out.println("Arquivo não encontrado." + e.getMessage());
-    } catch (IOException e) {
-      System.out.println("Erro ao ler arquivo." + e.getMessage());
     } catch (Exception e) {
       System.out.println("Erro ao exibir tela de usuário." + e.getMessage());
     }
@@ -147,22 +146,24 @@ public class DisplayLoja {
    * Realiza a compra dos produtos no carrinho.
    * @param carrinho ArrayList de produtos
    */
-
   private void realizarCompra(ArrayList<Produto> carrinho) throws Exception {
     /** variavel out recebe o caminho do arquivo onde será salvo o arquivo de compras */
     if (carrinho.isEmpty()) {
       throw new Exception("Carrinho vazio.");
     }
-
-    File out = new File("./bd/compras.txt");
+    
     double total = 0.0;
+    File out = new File("./bd/compras.txt");
+    
+    out.delete();
     for (Produto produto : carrinho) {
       total += produto.getPreco();
       if (produto instanceof ProdutoFisico) {
         total += ((ProdutoFisico) produto).calcularFrete(produto);
       }
-      FileHandler.writeToFile(out, produto.toString()); 
-      //WARN alterar isso daq
+      
+      String dados = "ID: " + produto.getId() + "| Arquivo: " + produto.getNome() +"\n" + produto.getDescricao() + "\n";
+      FileHandler.writeToFile(out, dados);
     }
     System.out.println("Total da compra: " + total);
     FileHandler.writeToFile(out, "Total da compra: " + total);
@@ -353,9 +354,9 @@ public class DisplayLoja {
       /** variavel opCategoria recebe a opção escolhida pelo usuario */
       int opCategoria = -1;
       /** variaveis para receber os dados da categoria */
-      int idCategoria = 0;
-      String nomeCategoria = "";
-      String descricaoCategoria = "";
+      int idCategoria;
+      String nomeCategoria;
+      String descricaoCategoria;
 
       while(opCategoria != 0) {
         System.out.println("----------Categorias----------");
@@ -379,7 +380,9 @@ public class DisplayLoja {
           nomeCategoria = sc.nextLine();
           System.out.println("Digite a descrição da categoria:");
           descricaoCategoria = sc.nextLine();
+          
           Categoria categoria = new Categoria(idCategoria, nomeCategoria, descricaoCategoria);
+          
           loja.adicionarCategoria(categoria);
           break;
 
@@ -433,12 +436,12 @@ public class DisplayLoja {
      * @param produto Produto
      */
   private boolean adicionarAoCarrinho(Produto produto) {
-    boolean check;
+    boolean check = false;
     if(carrinho.add(produto)) {
       check = true;
     } else {
       Logger.log(produto.getNome(), 2);
-      return check = false;
+      check = false;
     }
     return check;
   }

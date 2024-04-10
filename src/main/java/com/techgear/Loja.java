@@ -28,8 +28,8 @@ public class Loja {
    **/
   public void adicionarCategoria(Categoria categoria) {
     for(Categoria categoriaTeste : listaCategorias) {
-      if(categoriaTeste.getNome().equals(categoria.getNome())) {
-        Logger.log(categoria.getNome(), 1);
+      if(categoriaTeste.getCodigo() == categoria.getCodigo()) {
+        Logger.log(categoria.getNome(), 4);
         return;
       }
     }
@@ -45,8 +45,8 @@ public class Loja {
     Categoria categoria = buscarCategoria(idCategoria);
     if(categoria != null) {
       for(Produto produtoTeste : categoria.getListaProdutos()) {
-        if(produtoTeste.getNome().equals(produto.getNome())) {
-          Logger.log(produto.getNome(), 1);
+        if(produto.getId() == produtoTeste.getId()) {
+          Logger.log(produto.getNome(), 4);
           return;
         }
       }
@@ -58,7 +58,7 @@ public class Loja {
 
   /**
    * Adiciona um produto em uma categoria.
-   * @param nomeCategoria Nome da categoria onde o produto será adicionado.
+   * @param categoria Referencia à categoria.
    * @param produto Produto a ser adicionado.
    **/
   public void adicionarProduto(Categoria categoria, Produto produto) {
@@ -137,8 +137,7 @@ public class Loja {
   }
 
   /**
-   * Remove uma categoria da loja.
-   * @param nome Nome da categoria a ser removida.
+   * Lista todas as categorias
    **/
   public void listarCategorias() {
     for(Categoria categoria : listaCategorias) {
