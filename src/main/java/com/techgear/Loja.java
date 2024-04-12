@@ -15,6 +15,13 @@ public class Loja {
   private String endereco;
   private ArrayList<Categoria> listaCategorias;
 
+
+/**
+ *  Construtor da clase loja
+ *  @param nome Representa o nome da loja
+ *  @param cnpj Representa o cnpj da loja
+ *  @param endereco Representa o endereco da loja
+ */
   public Loja(String nome, String cnpj, String endereco) {
     this.nome = nome;
     this.cnpj = cnpj;
@@ -140,18 +147,24 @@ public class Loja {
    * Lista todas as categorias
    **/
   public void listarCategorias() {
+
+    System.out.println("----------Categorias----------");
     for(Categoria categoria : listaCategorias) {
       System.out.println(">"+categoria.getCodigo() + " - " + categoria.getNome());
     }
+    System.out.println("------------------------------");
   }
 
   /**
    * Lista os produtos de todas as categorias.
    **/
   public void listarProdutos() {
+
+    System.out.println("----------Produtos----------");
     for(Categoria categoria : listaCategorias) {
       categoria.listarProdutos();
     }
+    System.out.println("----------------------------");
   }
 
   /**
@@ -168,27 +181,60 @@ public class Loja {
     Logger.log(getNome(), 3);
   }
 
+/**
+ * Responsável por atualizar o valor do nome
+ * @param nome variável que atualizará o valor atual 
+ */
   public void setNome(String nome) {
     this.nome = nome;
   }
+/**
+ * Responsável por atualizar o valor do cnpj 
+ * @param cnpj variável que atualizará o valor atual 
+ */
   public void setCnpj(String cnpj) {
     this.cnpj = cnpj;
   }
+/**
+ * Responsável por atualizar o valor do endereco 
+ * @param endereco variável que atualizará o valor atual 
+ */
   public void setEndereco(String endereco) {
     this.endereco = endereco;
   }
+/**
+ * Responsável por atualizar o valor da lista de catogorias da loja 
+ * @param listaCategorias variável nome que atualizará o valor atual 
+ */
   public void setListaCategorias(ArrayList<Categoria> listaCategorias) {
     this.listaCategorias = listaCategorias;
   }
+
+/**
+ *  Responsável por retornar o valor atual da variavel nome
+ *  @return nome
+ */
   public String getNome() {
     return nome;
   }
+/**
+ *  Responsável por retornar o valor atual da variavel cnpj 
+ *  @return cnpj 
+ */
   public String getCnpj() {
     return cnpj;
   }
+  /**
+ *  Responsável por retornar o valor atual da variavel nome
+ *  @return endereco 
+ */ 
   public String getEndereco() {
     return endereco;
   }
+/**
+ *  Responsável por retornar o valor atual da variavel nome
+ *  @return listaCategorias  
+ */
   public ArrayList<Categoria> getListaCategorias() {
     return listaCategorias;
   }

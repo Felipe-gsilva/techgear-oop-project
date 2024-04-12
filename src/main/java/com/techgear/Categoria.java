@@ -98,7 +98,7 @@ public class Categoria {
       return;
     }
     for(Produto produto : listaProdutos) {
-      System.out.println(">"+produto.getId()+" - "+produto.getNome()+" - "+produto.getPreco());
+      System.out.println(">"+produto.getId()+" - "+produto.getNome()+" - "+produto.getPreco()+ " | Estoque: "+produto.getEstoque());
     }
   }
 

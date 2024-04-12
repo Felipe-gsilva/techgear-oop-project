@@ -67,13 +67,39 @@ public class ProdutoFisico extends Produto {
      * Valor de pontuacao para o frete.
      */
     double score = 0;
+    
+    String[] dimensoesSplit;
+
+    double dimensoesUnificadas = 1;
+
+    dimensoesSplit = ((ProdutoFisico)produto).getDimensoes().split("x");
+
+    for(int i = 0; i < 3; i++){
+      dimensoesUnificadas *= Double.parseDouble(dimensoesSplit[i]);
+    }
+
+    dimensoesUnificadas /=100;
 
     if(peso > 30) 
-    multiplicador += 2; 
+      multiplicador += 2; 
     else {
       score = peso*2;
       score = (score + 10)/45; 
     } 
+
+    if(dimensoesUnificadas > 200) // maior valor entregue pelo sedex
+      multiplicador += 5;
+    else {
+      score = (score + dimensoesUnificadas)/10;
+    }
+
+    if(score < 1)
+      multiplicador += score;
+    else {
+      score = (score/10) + 1;
+      multiplicador += score;
+    }
+
     return multiplicador * baseFrete; 
   }
 

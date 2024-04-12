@@ -6,13 +6,22 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * Classe que exibe a interface da loja.
+ * Classe que exibe a interface CLI da loja.
  * @version 1.0
  * @since 2024-04-08
+ * @author Felipe Gomes da Silva
+ * @see Loja
  **/
 public class DisplayLoja {
   private final Loja loja = new Loja("TechGear", "123456789", "Rua de Verdade, 128");
   private ArrayList<Produto> carrinho = new ArrayList<>();
+
+
+/**
+ *  Construtor vazio para a classe displayLoja
+ */
+  public DisplayLoja(){
+  }
 
   /**
    * Exibe a tela de usuário.
@@ -46,14 +55,10 @@ public class DisplayLoja {
           gerenciarCategoria();
           break;
           case 3:
-          System.out.println("----------Produtos----------");
           loja.listarProdutos();
-          System.out.println("----------------------------");
           break;
           case 4:
-          System.out.println("----------Categorias----------");
           loja.listarCategorias();
-          System.out.println("------------------------------");
           break;
           case 8:
           System.out.println("Nome: " + loja.getNome());
@@ -71,9 +76,9 @@ public class DisplayLoja {
           break;
         }
       }
-
     } catch (FileNotFoundException e) {
       System.out.println("Arquivo não encontrado." + e.getMessage());
+      telaUsuario();
     } catch (Exception e) {
       System.out.println("Erro ao exibir tela de usuário." + e.getMessage());
     }
@@ -111,9 +116,14 @@ public class DisplayLoja {
           int quantidade = sc.nextInt();
           sc.nextLine();
           produto = loja.buscarProduto(idProduto);
-          for (int i = 0; i < quantidade; i++) {
-            adicionarAoCarrinho(produto);
+
+          if(produto.getEstoque() > quantidade) {
+            for (int i = 0; i < quantidade; i++) {
+              adicionarAoCarrinho(produto);
+            }
           }
+          else 
+            throw new Exception("Estoque insuficiente");
           break;
           case 3:
           System.out.println("Digite o id do produto que deseja remover: ");
@@ -135,10 +145,11 @@ public class DisplayLoja {
           default:
           System.out.println("Opção inválida.");
           break;
-        }      
+        }
       }
     } catch (Exception e) {
       System.err.println("Erro ao gerenciar carrinho: " + e.getMessage());
+      gerenciarCarrinho();
     }
   }
 
@@ -151,22 +162,26 @@ public class DisplayLoja {
     if (carrinho.isEmpty()) {
       throw new Exception("Carrinho vazio.");
     }
-    
-    double total = 0.0;
+
+    double totalFrete = 0;
+    double totalBruto = 0;
     File out = new File("./bd/compras.txt");
-    
+
     out.delete();
     for (Produto produto : carrinho) {
-      total += produto.getPreco();
+      totalBruto += produto.getPreco(); 
       if (produto instanceof ProdutoFisico) {
-        total += ((ProdutoFisico) produto).calcularFrete(produto);
+        totalFrete += ((ProdutoFisico) produto).calcularFrete(produto);
       }
-      
       String dados = "ID: " + produto.getId() + "| Arquivo: " + produto.getNome() +"\n" + produto.getDescricao() + "\n";
+      produto.setEstoque(produto.getEstoque()-1);
       FileHandler.writeToFile(out, dados);
     }
-    System.out.println("Total da compra: " + total);
-    FileHandler.writeToFile(out, "Total da compra: " + total);
+
+    System.out.println("Preço bruto dos produtos: " + totalBruto);
+    System.out.println("Frete: " + totalFrete);
+    System.out.println("Total da compra: " + (totalBruto + totalFrete));
+    FileHandler.writeToFile(out, "Total da compra: " + (totalBruto + totalFrete));
     carrinho.clear();
   }
 
@@ -188,6 +203,7 @@ public class DisplayLoja {
       String descricaoProduto = "";
       String marca = "";
       Categoria categoria; 
+      int estoque;
 
       while(opProduto != 0) {
         System.out.println("----------Produtos----------");
@@ -230,13 +246,33 @@ public class DisplayLoja {
           System.out.println("Digite o peso do produto:");
           peso = sc.nextDouble();
           sc.nextLine();
-          System.out.println("Digite a altura, a largura e a profundidade do produto:");
+          System.out.println("Digite a altura, a largura e a profundidade do produto: (ex: 45.00x35.02x99.99)");
           dimensoes = sc.nextLine();
+          System.out.println("Insira a quantidade do produto no estoque");
+          estoque = sc.nextInt();
+          sc.nextLine();
 
+
+          int check = 0;
+          for(int i = 0; i < dimensoes.length(); i++) {
+            if('x' == dimensoes.charAt(i))
+            check++;
+            // se tiver um x do lado de outro, exceção lançada 
+            if('x' == dimensoes.charAt(i) && 'x' == dimensoes.charAt(i+1))
+            throw new Exception("Nao coloque um separador x ao lado de outro");
+            // se tiver uma , exceção lançada 
+            if(',' == dimensoes.charAt(i))
+            throw new Exception("Use '.' ao invés de ','");
+          }
+
+          // se nao tiver 3 x's, exceção é lançada
+          if(check != 2)
+          throw new Exception("Dimensoes mal inseridas!");
           /** 
            * Cria o objeto produto fisico e adiciona na loja.
            */
           ProdutoFisico produtoFisico = new ProdutoFisico(idProduto, nomeProduto, precoProduto, descricaoProduto, marca,categoria, peso, dimensoes);
+          produtoFisico.setEstoque(estoque);
           loja.adicionarProduto(produtoFisico.getCategoria(), produtoFisico);
           break;
           case 2:
@@ -271,11 +307,15 @@ public class DisplayLoja {
           sc.nextLine();
           System.out.println("Digite o formato:");
           formato = sc.nextLine();
+          System.out.println("Informe o estoque:");
+          estoque = sc.nextInt();
+          sc.nextLine();
 
           /** 
            * Cria o objeto produto virtual e adiciona na loja.
            */
           Produto produtoVirtual = new ProdutoVirtual(idProduto, nomeProduto, precoProduto, descricaoProduto, marca,categoria, tamanho, formato);
+          produtoVirtual.setEstoque(estoque);
           loja.adicionarProduto(produtoVirtual.getCategoria(), produtoVirtual);
           break;
           case 3:
@@ -295,9 +335,7 @@ public class DisplayLoja {
            * Lista os produtos.
            */
           case 4: 
-          System.out.println("----------Produtos----------");
           loja.listarProdutos();
-          System.out.println("----------------------------");
           break;
           case 5:
           /** 
@@ -341,6 +379,7 @@ public class DisplayLoja {
       } 
     }catch (Exception e) {
       System.err.println("Erro ao gerenciar produto: " + e.getMessage());
+      gerenciarProduto();
     }
   }
 
@@ -380,9 +419,9 @@ public class DisplayLoja {
           nomeCategoria = sc.nextLine();
           System.out.println("Digite a descrição da categoria:");
           descricaoCategoria = sc.nextLine();
-          
+
           Categoria categoria = new Categoria(idCategoria, nomeCategoria, descricaoCategoria);
-          
+
           loja.adicionarCategoria(categoria);
           break;
 
@@ -399,9 +438,7 @@ public class DisplayLoja {
           loja.removerCategoria(idCategoria);
           break;
           case 3:
-          System.out.println("----------Categorias----------");
           loja.listarCategorias();
-          System.out.println("----------------------------");
           break;
           case 0: 
           break;
@@ -412,6 +449,7 @@ public class DisplayLoja {
       }
     } catch (Exception e) {
       System.err.println("Erro ao gerenciar categoria: " + e.getMessage()); 
+      gerenciarCategoria();
     }
   }
 

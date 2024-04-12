@@ -110,6 +110,7 @@ public class FileHandler {
         loja.adicionarProduto(categoria, produtoVirtual);
 
       }
+      scanner.close();
     } catch (FileNotFoundException e) {
       System.out.println("Arquivo não encontrado." + e.getMessage());
     }
