@@ -69,7 +69,7 @@ public class Loja {
    **/
   public void adicionarProduto(Categoria categoria, Produto produto) {
     for (Produto produtoTeste : categoria.getListaProdutos()) {
-      if(produtoTeste.getNome().equals(produto.getNome()))
+      if(produtoTeste.getId() == produto.getId())
       return;
     }
     categoria.adicionarProduto(produto);

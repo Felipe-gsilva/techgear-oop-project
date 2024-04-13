@@ -2,7 +2,14 @@ package com.techgear.util;
 
 /**
  * Classe que implementa um logger para a aplicaçã, com valores padrões de erro baseados em códigos.
- * 
+ * 1 - Não encontrado
+ * 2 - Erro ao adicionar
+ * 3 - Erro ao remover
+ * 4 - ID ja existe
+ * 5 - Erro ao atualziar 
+ * 6 - Erro ao buscar 
+   * 7 - Erro ao escrever no arquivo
+ *
  * @version 1.0
  * @author Felipe Gomes da Silva
  * @since 2024-04-08
