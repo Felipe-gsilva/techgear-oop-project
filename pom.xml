@@ -9,8 +9,6 @@
   <version>1.0</version>
 
   <name>app</name>
-  <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -65,7 +63,8 @@
           <artifactId>maven-javadoc-plugin</artifactId>
           <version>3.6.3</version>
           <configuration>
-            ...
+            <show> public </show>
+            <nohelp> true </nohelp>
             </configuration>
           </plugin>
         <!-- site lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#site_Lifecycle -->

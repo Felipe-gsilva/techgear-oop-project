@@ -21,7 +21,7 @@ public class Categoria {
   /** Descrição da categoria. **/
   private String descricao;
   /** Lista de produtos da categoria. **/
-  private ArrayList<Produto> listaProdutos;
+  private ArrayList<Produto> listaProdutos = new ArrayList<Produto>();
   
   /**
    * Construtor da classe Categoria.
@@ -33,7 +33,6 @@ public class Categoria {
     this.codigo = codigo;
     this.nome = nome;
     this.descricao = descricao;
-    this.listaProdutos = new ArrayList<Produto>();
   }
 
   /**

@@ -16,7 +16,6 @@ public class DisplayLoja {
   private final Loja loja = new Loja("TechGear", "123456789", "Rua de Verdade, 128");
   private ArrayList<Produto> carrinho = new ArrayList<>();
 
-
 /**
  *  Construtor vazio para a classe displayLoja
  */
@@ -28,7 +27,7 @@ public class DisplayLoja {
    */
   public void telaUsuario() {
     try {
-       /** instancia o objeto fileHandler, responsavel por gerenciar os arquivos */
+      /** instancia o objeto fileHandler, responsavel por gerenciar os arquivos */
       FileHandler fileHandler = new FileHandler();
       fileHandler.loadFiles(loja);
       /** instancia o objeto scanner para receber a entrada do usuario */
@@ -46,7 +45,7 @@ public class DisplayLoja {
         System.out.println("0 - Sair");
         op = sc.nextInt();
         sc.nextLine();
-        
+
         switch (op) {
           case 1:
           gerenciarProduto(); 
@@ -84,7 +83,7 @@ public class DisplayLoja {
     }
   }
 
- /**
+  /**
    * Exibe a tela de gerenciamento do carrinho.
    */
   private void gerenciarCarrinho() {
@@ -123,7 +122,7 @@ public class DisplayLoja {
             }
           }
           else 
-            throw new Exception("Estoque insuficiente");
+          throw new Exception("Estoque insuficiente");
           break;
           case 3:
           System.out.println("Digite o id do produto que deseja remover: ");
@@ -353,7 +352,11 @@ public class DisplayLoja {
           System.out.println("Digite a quantidade que deseja adicionar: ");
           int quantidade = sc.nextInt();
           sc.nextLine();
+
+          if(quantidade > 0) 
           loja.buscarProduto(idProduto).atualizarEstoque(quantidade);
+          else 
+          throw new Exception("Estoque inválido");
           break;
           case 7:
           /** 
@@ -365,7 +368,12 @@ public class DisplayLoja {
           System.out.println("Digite o novo preço: ");
           precoProduto = sc.nextDouble();
           sc.nextLine();
+
+          if(precoProduto > 0)
           loja.buscarProduto(idProduto).atualizarPreco(precoProduto);
+          else 
+          throw new Exception("Preço inválido");
+
           break;
           case 8:
           loja.listarCategorias();
